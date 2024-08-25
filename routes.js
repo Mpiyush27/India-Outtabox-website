@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Booking = require("./Models/Booking"); // Import the Booking model
 const Contact = require("./Models/Contact");
+const MedBooking = require("./Models/MedTour");
 const Activity_booking = require('./Models/Activity_booking');
 const Subscription = require('./Models/Subscription');
+const CultBooking = require("./Models/Cultural")
 
 router.get('/', (req, res) => {
     res.json({ msg: "This is an example" });
@@ -28,7 +30,28 @@ router.post('/activity_bookings', async (req, res) => {
         res.status(400).json({ message: 'Error creating booking', error });
     }
 });
-
+router.post('/medtourism', async (req, res) => {
+    try {
+       
+        const newMedBooking = await MedBooking.create({ ...req.body });
+       
+        res.status(201).json(newMedBooking);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: 'Error creating MedBooking', error });
+    }
+});
+router.post('/culturaltourism', async (req, res) => {
+    try {
+       
+        const newCultBooking = await CultBooking.create({ ...req.body });
+       
+        res.status(201).json(newCultBooking);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: 'Error creating CulturalBooking', error });
+    }
+});
 router.post('/contactUs', async (req, res) => {
     try {
         console.log(req.body);
